@@ -1,0 +1,100 @@
+
+
+#create database dia;
+use dia;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+
+CREATE TABLE `user` (
+  `FirstName` varchar(20) NOT NULL,
+  `LastName` varchar(20) NOT NULL,
+  `Email` varchar(40) NOT NULL,
+  `Password` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+INSERT INTO `user` (`FirstName`, `LastName`, `Email`, `Password`) VALUES
+('Shivanee', 'Jaiswal', 'shivanee.j@somaiya.edu', 'shivanee'),
+('S', 'J', 'shivaneej02@gmail.com', 'shiv');
+
+-- --------------------------------------------------------
+
+
+
+CREATE TABLE `usernote` (
+  `noteID` int(11) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `uploadDate` datetime NOT NULL,
+  `title` varchar(60) NOT NULL,
+  `noteBody` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`Email`);
+
+
+ALTER TABLE `usernote`
+  ADD PRIMARY KEY (`noteID`),
+  ADD KEY `usernote` (`email`);
+
+
+ALTER TABLE `usernote`
+  MODIFY `noteID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+
+ALTER TABLE `usernote`
+  ADD CONSTRAINT `usernote` FOREIGN KEY (`email`) REFERENCES `user` (`Email`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+
+CREATE TABLE IF NOT EXISTS `reminders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(35) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `description` text NOT NULL,
+  `date` date NOT NULL,
+  `flag` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (email) REFERENCES user(email)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+
+drop table reminders;
+select * from reminders where id='1' and email='sample@gmail.com';
+ 
+/* CREATE TABLE IF NOT EXISTS `tbl_images` (  
+  `id` int(11) NOT NULL AUTO_INCREMENT,  
+  `name` blob NOT NULL,
+  `email` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`),  
+  FOREIGN KEY (email) REFERENCES user(email)
+ ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+ select * from tbl_images;*/
+ create table if not exists `images` (
+ `id`  int(11),
+`image` varchar(100),
+`image_text`  text,
+primary key (`id`)
+
+ ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+ 
+ 
+ 
+CREATE TABLE IF NOT EXISTS `contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(35) NOT NULL,
+  `description` text NOT NULL,
+  `email` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (email) REFERENCES user(email)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ; 
+select * from contacts;
+
+select * from usernote;
+
